@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd">
+	<named-query name="Book.findAll">
+		<query>SELECT b FROM Book b</query>
+	</named-query>
+	<named-query name="Reader.findAll">
+		<query>SELECT r FROM Reader r</query>
+	</named-query>
+	<named-query name="Author.findAll">
+		<query>SELECT a FROM Author a</query>
+	</named-query>
+	<named-native-query name="Author.withBooks" result-class="library_test.Author">
+		<query>SELECT a.* FROM &quot;Author&quot; a WHERE id IN (SELECT DISTINCT(fk_author) FROM &quot;Book&quot;)</query>
+	</named-native-query>
+	<named-native-query name="Reader.byYear" result-set-mapping="ReaderYearMapping">
+		<query>SELECT EXTRACT(YEAR FROM birthday) AS year, COUNT(id) AS count FROM &quot;Reader&quot; GROUP BY year ORDER BY year ASC</query>
+	</named-native-query>
+	<named-native-query name="Author.byPopularity" result-set-mapping="PopularAuthorMapping">
+		<query>SELECT a.id AS author_id, a.name AS author_name, COALESCE(SUM(bs.readers_read), 0) AS author_popularity FROM &quot;Author&quot; a LEFT JOIN (    SELECT COUNT(rb.fk_reader) AS readers_read, b.fk_author FROM &quot;Reader_book&quot; rb LEFT JOIN &quot;Book&quot; b ON rb.fk_book = b.id GROUP BY b.fk_author ) AS bs  ON a.id = bs.fk_author GROUP BY a.id ORDER BY author_popularity DESC, author_name ASC LIMIT :numlimit</query>
+	</named-native-query>
+</entity-mappings>

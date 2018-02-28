@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="library_test" transaction-type="RESOURCE_LOCAL">
+		<mapping-file>src/main/resources/META-INF/orm.xml</mapping-file>
+		<mapping-file>META-INF/orm.xml</mapping-file>
+		<class>library_test.Author</class>
+		<class>library_test.Book</class>
+		<class>library_test.Reader</class>
+		<properties>
+			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/library_test"/>
+			<property name="javax.persistence.jdbc.user" value="lib_test"/>
+			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+		</properties>
+	</persistence-unit>
+</persistence>

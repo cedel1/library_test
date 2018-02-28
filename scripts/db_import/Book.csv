@@ -1,0 +1,6 @@
+"id";"name";"fk_author"
+"1";"testbook1_author1";"1"
+"2";"testbook2_author1";"1"
+"3";"testbook1 author2";"2"
+"4";"testbook2 author2";"2"
+"5";"testbook1 author3";"3"
